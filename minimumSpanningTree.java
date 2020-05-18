@@ -16,8 +16,8 @@ public class minimumSpanningTree{
         Collections.sort(path, new Comparator<edge>(){
             @Override
             public int compare(edge x,edge y) {
-                if(x.getLen()<y.getLen()) return -1;
-                else if(x.getLen()>y.getLen())    return 1;
+                if(x.len<y.len) return -1;
+                else if(x.len>y.len)    return 1;
                 return 0;
             }
         });
