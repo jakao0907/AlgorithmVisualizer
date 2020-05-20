@@ -17,10 +17,7 @@ public class minimumSpanningTree extends graph{
                 return 0;
             }
         });
-        for(edge x : super.G){
-            System.out.println(x);
-        }
-        return super.G;
+        return new ArrayList<edge>(super.G);
     }
 
 }

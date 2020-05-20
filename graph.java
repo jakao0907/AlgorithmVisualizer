@@ -18,7 +18,6 @@ public class graph{
 		for(int i=1;i<=n;i++){
 			AdjacencyList[i] = new ArrayList<pair>();
 		}
-		System.out.println(AdjacencyList.length);
 		for(edge x:G){
 			int a=x.u,b=x.v,c=x.len;
 			AdjacencyList[a].add(new pair(b,c));
