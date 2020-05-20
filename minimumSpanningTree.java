@@ -2,18 +2,14 @@ package ntou.cs.java2020.project;
 
 import java.util.*;
 
-public class minimumSpanningTree{
-    private int n,m;
-    private ArrayList<edge> path;
+public class minimumSpanningTree extends graph{
 
-    public void minimumSpanningTree(int _n,int _m,ArrayList<edge> _path){
-        n = _n;
-        m = _m;
-        path = new ArrayList<edge>(_path);
+    public minimumSpanningTree(int _n,int _m,ArrayList<edge> _G){
+        super(_n,_m,_G);
     }
 
     public ArrayList<edge> solve(){
-        Collections.sort(path, new Comparator<edge>(){
+        Collections.sort(super.G, new Comparator<edge>(){
             @Override
             public int compare(edge x,edge y) {
                 if(x.len<y.len) return -1;
@@ -21,10 +17,10 @@ public class minimumSpanningTree{
                 return 0;
             }
         });
-        for(edge x : path){
+        for(edge x : super.G){
             System.out.println(x);
         }
-        return path;
+        return super.G;
     }
 
 }

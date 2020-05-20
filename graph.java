@@ -16,7 +16,7 @@ public class graph{
 		AdjacencyMartix = new int[n+1][n+1];
 		AdjacencyList = new ArrayList[n+1];
 		for(int i=1;i<=n;i++){
-			AdjacencyList[i] = new ArrayList();
+			AdjacencyList[i] = new ArrayList<pair>();
 		}
 		System.out.println(AdjacencyList.length);
 		for(edge x:G){
