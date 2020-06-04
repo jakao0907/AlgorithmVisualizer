@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
-	private static int n=3;
-	private static int m=2;
+	private static int n;
+	private static int m=0;
 	protected static ArrayList<edge> testGraph = new ArrayList<edge>();
 	// private static minimumSpanningTreeGUI gui;
 	public static void main(String[] args){
@@ -25,7 +25,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	}
 
 	public void func(){
-		System.out.println("HI");	
+		System.out.println(n);	
 	}
 		
 	@Override
@@ -49,7 +49,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			else{
 				paintBasicPoint();
 				errLabel.setText("");
-				int n = Integer.parseInt(vertexNumberText.getText());
+				n = Integer.parseInt(vertexNumberText.getText());
 				fromPointTest.removeAllItems();
 				fromPointTest.addItem("請選擇");
 				for(int i=1;i<=n;i++){
