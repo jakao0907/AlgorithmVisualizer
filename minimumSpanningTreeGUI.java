@@ -14,7 +14,8 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	protected JTextField vertexNumberText,weightPointTest;
 	protected JPanel functionPanel,errPanel,addEdgePanel;
 	protected JComboBox fromPointTest,toPointTest;
-	// private ArrayList<edge> G;
+	private ArrayList<edge> edgeArray;
+	private minimumSpanningTree myGraph;
 
 	public minimumSpanningTreeGUI(){
 
@@ -79,73 +80,16 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new minimumSpanningTreeGUI();
-	}
-
 	public void paintBasicPoint(){
 		ArrayList<pair> pointPosition = new ArrayList<pair>();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==fromPointTest){
-			int n=Integer.parseInt(vertexNumberText.getText());
-			if(fromPointTest.getSelectedItem()!="請選擇"){
-				toPointTest.removeAllItems();
-				toPointTest.addItem("請選擇");
-				for(int i=1;i<=n;i++){
-					if(i!=Integer.parseInt(fromPointTest.getSelectedItem().toString()))
-					toPointTest.addItem(i);
-				}
-				toPointTest.setEnabled(true);
-			}
-		}
-		else if(e.getSource()==buildButton){
-			if(vertexNumberText.getText().equals("")){
-				errLabel.setText("無輸入!!!");
-			}
-			else{
-				paintBasicPoint();
-				errLabel.setText("");
-				int n = Integer.parseInt(vertexNumberText.getText());
-				fromPointTest.removeAllItems();
-				fromPointTest.addItem("請選擇");
-				for(int i=1;i<=n;i++){
-					fromPointTest.addItem(i);
-				}
-				fromPointTest.setEnabled(true);
-				weightPointTest.setEnabled(true);
-				addEdgeButton.setEnabled(true);
-				startButton.setEnabled(true);
-			}
-		}
-		else if(e.getSource()==startButton){
-		}
-		else if(e.getSource()==addEdgeButton){
-			if(weightPointTest.getText().equals("")){
-				errLabel.setText("請輸入權重!");
-			}
-			else if(fromPointTest.getSelectedItem().equals("請選擇")){
-				errLabel.setText("請選擇端點1");
-			}
-			else if(toPointTest.getSelectedItem().equals("請選擇")){
-				errLabel.setText("請選擇端點2");
-			}
-			else if(Integer.parseInt(weightPointTest.getText())<=0){
-				errLabel.setText("邊權重需為正整數!");
-			}
-			else{
-				errLabel.setText("");
-				int a = Integer.parseInt(fromPointTest.getSelectedItem().toString());
-				int b = Integer.parseInt(toPointTest.getSelectedItem().toString());
-				int c = Integer.parseInt(weightPointTest.getText());
-				// G.add(edge(a,b,c));
-			}
-		}
-		else{
-			System.out.println("?");
-		}
+
 	}
 
+	public static void main(String[] args) {
+		new minimumSpanningTreeGUI();
+	}
 }
