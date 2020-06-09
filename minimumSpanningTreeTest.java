@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
+	private targetX;
+	private targetY;
+	private targetWidth;
+	private targetHeight;
 	private static int n;
 	private static int m=0;
 	protected static ArrayList<edge> testGraph = new ArrayList<edge>();
@@ -24,8 +28,12 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		
 	}
 
-	public void func(){
-		System.out.println(n);	
+	public void paint(Graphics g){
+		g.drawOval(targetX,targetY,targetWidth,targetHeight);
+	}
+
+	public void drawPoint(){
+		System.out.println(n);
 	}
 		
 	@Override
@@ -90,5 +98,4 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			System.out.println("?");
 		}
 	}
-
 }

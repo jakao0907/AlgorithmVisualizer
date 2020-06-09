@@ -73,18 +73,14 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		startButton.addActionListener(this);
 		addEdgeButton.addActionListener(this);
 
+
 		setSize(550,500);
 		setTitle("minimum Spanning Tree");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		setVisible(true);
 	}
-
-	public void paintBasicPoint(){
-		ArrayList<pair> pointPosition = new ArrayList<pair>();
-
-	}
-
+	
 	public void actionPerformed(ActionEvent e) {
 
 	}
