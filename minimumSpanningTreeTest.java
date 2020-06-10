@@ -7,10 +7,12 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
-	private targetX;
-	private targetY;
-	private targetWidth;
-	private targetHeight;
+	private final static int gwidth = 550;
+	private final static int gheight = 500;
+	private int targetX;
+	private int targetY;
+	private int targetWidth;
+	private int targetHeight;
 	private static int n;
 	private static int m=0;
 	protected static ArrayList<edge> testGraph = new ArrayList<edge>();
@@ -28,8 +30,17 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		
 	}
 
-	public void paint(Graphics g){
-		g.drawOval(targetX,targetY,targetWidth,targetHeight);
+	public void paintPoint(){
+		update(super.g);
+		int[] X=new int[n],Y=new int[n];
+		final double PIDouble=Math.PI*2;
+		int s=0;
+		for(int a=0;a<PIDouble;a+=PIDouble/n){
+			X[s] = (int) (Math.round((gwidth/2-1) * Math.cos(a)*Math.pow(10,0))/Math.pow(10,0)+(gwidth/2));
+            Y[s] = (int) (Math.round((gwidth/2-1) * Math.sin(a)*Math.pow(10,0))/Math.pow(10,0)+(gheight/2));
+            super.g.drawOval(X[s],Y[s],10,10);
+            s++;
+		}
 	}
 
 	public void drawPoint(){
@@ -55,9 +66,10 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				errLabel.setText("無輸入!!!");
 			}
 			else{
-				paintBasicPoint();
+				// paintBasicPoint();
 				errLabel.setText("");
 				n = Integer.parseInt(vertexNumberText.getText());
+				paintPoint();
 				fromPointTest.removeAllItems();
 				fromPointTest.addItem("請選擇");
 				for(int i=1;i<=n;i++){
@@ -91,7 +103,6 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				int c = Integer.parseInt(weightPointTest.getText());
 				// G.add(edge(a,b,c));
 				System.out.printf("%d %d %d\n",a,b,c);
-				func();
 			}
 		}
 		else{
