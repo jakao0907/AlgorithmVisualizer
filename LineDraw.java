@@ -121,11 +121,12 @@ public class LineDraw extends JFrame implements ActionListener{ //宣告LineDraw
 			//--多邊形頂點連線繪圖迴圈程式--
 				for(i=0;i<n-1;i++) //從第一點到倒數第二點
 				{
-					for(k=i+1;k<n;k++) //每一點都會一直與自己的下一點或是下下點，一直到最後一點都連成直線。
-					{
-						g.drawLine(X[i]+gx, Y[i]+gy, X[k]+gx, Y[k]+gy); //在g畫布上畫直線。
-						//System.out.println("(X[" + i + "]="+X[i]+","+"Y[" + i + "]="+Y[i]+") - " + "(X[" + k + "]="+X[k]+","+"Y[" + k + "]="+Y[k]+")"); //將前面註解拿掉，可以查看點連線的詳細動作模式。
-					}
+					// for(k=i+1;k<n;k++) //每一點都會一直與自己的下一點或是下下點，一直到最後一點都連成直線。
+					// {
+					// 	g.drawLine(X[i]+gx, Y[i]+gy, X[k]+gx, Y[k]+gy); //在g畫布上畫直線。
+					// 	//System.out.println("(X[" + i + "]="+X[i]+","+"Y[" + i + "]="+Y[i]+") - " + "(X[" + k + "]="+X[k]+","+"Y[" + k + "]="+Y[k]+")"); //將前面註解拿掉，可以查看點連線的詳細動作模式。
+					// }
+					g.drawOval(X[i]+gx,Y[i]+gy,10,10);
 				}
 			//-------------END------------
 		}

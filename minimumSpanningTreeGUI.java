@@ -8,9 +8,9 @@ import java.awt.event.*;
 
 public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 
-	private final static int gwidth = 550;
-	private final static int gheight = 500;
-	private final int guiWidth=500,guiHeight=500;
+	protected final static int gwidth = 450;
+	protected final static int gheight = 450;
+	private final int guiWidth=600,guiHeight=600;
 	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel;
 	protected JButton buildButton,startButton,addEdgeButton;
 	protected JTextField vertexNumberText,weightPointTest;
@@ -19,6 +19,8 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	private ArrayList<edge> edgeArray;
 	protected static Graphics g;
 	private minimumSpanningTree myGraph;
+	protected static int gx,gy;
+	Dimension ScreenSize,FrameSize;
 
 	public minimumSpanningTreeGUI(){
 
@@ -76,18 +78,21 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		startButton.addActionListener(this);
 		addEdgeButton.addActionListener(this);
 
-
-		int gx=(gwidth)/2;
-		int gy=(gheight)/2;
-		g = getGraphics();
-		g.setClip(gx,gy, gwidth, gheight);
-		g.setColor(Color.BLACK);
-
-		setSize(550,500);	//寬-長
+		setSize(guiWidth,guiHeight);	//寬-長
 		setTitle("minimum Spanning Tree");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		setVisible(true);
+
+		ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		FrameSize = getSize();
+		setLocation((ScreenSize.width-FrameSize.width)/2,(ScreenSize.height-FrameSize.height)/2);
+
+		gx=(FrameSize.width-gwidth)/2;
+		gy=(FrameSize.height-gheight)/2+25;
+		g = getGraphics();
+		g.setClip(gx,gy, gwidth, gheight);
+		g.setColor(Color.BLACK);
 	}
 	
 	public void actionPerformed(ActionEvent e) {

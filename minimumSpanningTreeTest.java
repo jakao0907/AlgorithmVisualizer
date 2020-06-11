@@ -7,14 +7,11 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
-	private final static int gwidth = 550;
-	private final static int gheight = 500;
-	private int targetX;
-	private int targetY;
-	private int targetWidth;
-	private int targetHeight;
 	private static int n;
 	private static int m=0;
+	private static JLabel testNumLabel;
+	private static JPanel vertexNumberPanel;
+	private static boolean flag=false;
 	protected static ArrayList<edge> testGraph = new ArrayList<edge>();
 	// private static minimumSpanningTreeGUI gui;
 	public static void main(String[] args){
@@ -32,13 +29,15 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 
 	public void paintPoint(){
 		update(super.g);
-		int[] X=new int[n],Y=new int[n];
+		int[] X=new int[n+1],Y=new int[n+1];
 		final double PIDouble=Math.PI*2;
 		int s=0;
-		for(int a=0;a<PIDouble;a+=PIDouble/n){
-			X[s] = (int) (Math.round((gwidth/2-1) * Math.cos(a)*Math.pow(10,0))/Math.pow(10,0)+(gwidth/2));
-            Y[s] = (int) (Math.round((gwidth/2-1) * Math.sin(a)*Math.pow(10,0))/Math.pow(10,0)+(gheight/2));
-            super.g.drawOval(X[s],Y[s],10,10);
+		for(double a=0;a<PIDouble;a+=PIDouble/n){
+			X[s] = (int) (Math.round((super.gwidth/2-1) * Math.cos(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gwidth/2));
+            Y[s] = (int) (Math.round((super.gwidth/2-1) * Math.sin(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gheight/2));
+            super.g.drawOval(X[s]+super.gx,Y[s]+super.gy,30,30);
+            super.g.drawString(Integer.toString(s+1),X[s]+super.gx+12,Y[s]+super.gy+19);
+           	System.out.println((X[s]+super.gx)+" "+(Y[s]+super.gy));
             s++;
 		}
 	}
@@ -49,24 +48,11 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==fromPointTest){
-			int n=Integer.parseInt(vertexNumberText.getText());
-			if(fromPointTest.getSelectedItem()!="請選擇"){
-				toPointTest.removeAllItems();
-				toPointTest.addItem("請選擇");
-				for(int i=1;i<=n;i++){
-					if(i!=Integer.parseInt(fromPointTest.getSelectedItem().toString()))
-					toPointTest.addItem(i);
-				}
-				toPointTest.setEnabled(true);
-			}
-		}
-		else if(e.getSource()==buildButton){
+		if(e.getSource()==buildButton){
 			if(vertexNumberText.getText().equals("")){
 				errLabel.setText("無輸入!!!");
 			}
 			else{
-				// paintBasicPoint();
 				errLabel.setText("");
 				n = Integer.parseInt(vertexNumberText.getText());
 				paintPoint();
@@ -103,6 +89,18 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				int c = Integer.parseInt(weightPointTest.getText());
 				// G.add(edge(a,b,c));
 				System.out.printf("%d %d %d\n",a,b,c);
+			}
+		}
+		else if(fromPointTest!=null&&e.getSource()==fromPointTest){
+			int n=Integer.parseInt(vertexNumberText.getText());
+			if(fromPointTest.getSelectedItem()!=null&&!fromPointTest.getSelectedItem().toString().equals("請選擇")){
+				toPointTest.removeAllItems();
+				toPointTest.addItem("請選擇");
+				for(int i=1;i<=n;i++){
+					if(i!=Integer.parseInt(fromPointTest.getSelectedItem().toString()))
+					toPointTest.addItem(i);
+				}
+				toPointTest.setEnabled(true);
 			}
 		}
 		else{
