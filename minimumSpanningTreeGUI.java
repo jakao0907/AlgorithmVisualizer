@@ -8,13 +8,13 @@ import java.awt.event.*;
 
 public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 
-	protected final static int gwidth = 450;
+	protected final static int gwidth = 1000;
 	protected final static int gheight = 600;
 	private final int guiWidth=1000,guiHeight=800;
-	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel,testLabel1,testLabel2;
+	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel;
 	protected JButton buildButton,startButton,addEdgeButton;
 	protected JTextField vertexNumberText,weightPointTest;
-	protected JPanel functionPanel,errPanel,addEdgePanel,edgeDisplayPanel;
+	protected JPanel functionPanel,errPanel,addEdgePanel;
 	protected JComboBox fromPointTest,toPointTest;
 	private ArrayList<edge> edgeArray;
 	protected static Graphics g;
@@ -24,15 +24,6 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	
 	public minimumSpanningTreeGUI(){
 
-		edgeDisplayPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-		// testLabel1 = new JLabel("10 - 20  length = 34445");
-		// testLabel2 = new JLabel("4 - 5  length = 6");
-		// edgeDisplayPanel.add(testLabel1);
-		// edgeDisplayPanel.add(testLabel2);
-		// edgeDisplayPanel.setSize(180,400);
-		// edgeDisplayPanel.setLocation(750,10);
-		// add(edgeDisplayPanel);
 
 		vertexNumberLabel = new JLabel("輸入點的數量");
 		vertexNumberText = new JTextField(10);
@@ -92,7 +83,6 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		setSize(guiWidth,guiHeight);	//寬-長
 		setTitle("minimum Spanning Tree");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// setLayout(new FlowLayout());
 		setLayout(null);
 		setVisible(true);
 
@@ -100,7 +90,8 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		FrameSize = getSize();
 		setLocation((ScreenSize.width-FrameSize.width)/2,(ScreenSize.height-FrameSize.height)/2);
 
-		gx=(FrameSize.width-gwidth)/2;
+		// gx=(FrameSize.width-gwidth)/2;
+		gx=0;
 		gy=(FrameSize.height-gheight)/2+100;
 		g = getGraphics();
 		g.setClip(gx,gy, gwidth, gheight);

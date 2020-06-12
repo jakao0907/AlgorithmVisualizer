@@ -16,9 +16,10 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	private int[][] adjacencyMartix;
 	private int[] X,Y;
 	private disjointSet myDS;
+	private static int nowHeight=300;
 
 	public static void main(String[] args){
-		new minimumSpanningTreeTest();		
+		new minimumSpanningTreeTest();	
 	}
 
 	public void paintPoint(){
@@ -27,11 +28,13 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		Y = new int[n+1];
 		final double PIDouble=Math.PI*2;
 		int s=0;
+		super.g.setColor(Color.BLACK);
 		for(double a=0;a<PIDouble;a+=PIDouble/n){
-			X[s] = (int) (Math.round((super.gwidth/2-1) * Math.cos(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gwidth/2));
-            Y[s] = (int) (Math.round((super.gwidth/2-1) * Math.sin(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gheight/2));
+			X[s] = (int) (Math.round((super.gheight/2-1) * Math.cos(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gwidth/2));
+            Y[s] = (int) (Math.round((super.gheight/2-1) * Math.sin(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gheight/2));
             super.g.drawOval(X[s]+super.gx,Y[s]+super.gy,30,30);
             super.g.drawString(Integer.toString(s+1),X[s]+super.gx+12,Y[s]+super.gy+19);
+            System.out.println((X[s]+super.gx)+ " "+(Y[s]+super.gy ));
             s++;
 		}
 	}
@@ -46,6 +49,8 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		myDS.union(a,b);
 		m++;
 		int diffX,diffY;
+		// super.g.drawString(a+" - "+b+" length = "+c,870,nowHeight);
+		nowHeight+=20;
 		diffX = Math.abs((int) Math.round((Math.cos(angle)*15)));
 		diffY = Math.abs((int) -Math.round((Math.sin(angle)*15)));
 		if(X[a-1]>X[b-1]){
@@ -70,24 +75,25 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	
 	public void play(){
 		minimumSpanningTree game = new minimumSpanningTree(n,m,testGraph);
-		ArrayList<edge> testGraph = game.solve();
+		// super.g.drawString("1 - 2 length = 3",870,340);
+		// super.g.drawString("1 - 2 length = 3",870,300);
+		// super.g.drawString("1 - 2 length = 3",870,320);
+		ArrayList<edge> getGraph = game.solve();
 		int edgeID = 0;
 		for(edge i:testGraph){
 			if(edgeID > 0){
 				super.g.setColor(Color.GREEN);
-				edge front = testGraph.get(edgeID-1);
+				edge front = getGraph.get(edgeID-1);
 				drawEdge(front.u,front.v,front.len);
 			}
-			super.g.setColor(Color.RED);
 			drawEdge(i.u,i.v,i.len);
 			System.out.println(i.u+" "+i.v+" "+i.len);
-			for(Component c:super.edgeDisplayPanel.getComponents()){
-				String str1 = i.u+" - "+i.v+" length = "+i.len;
-				String str2 = i.v+" - "+i.u+" length = "+i.len;
-				if(((JLabel)c).getText().toString().equals(str1)||((JLabel)c).getText().toString().equals(str2)){
-					c.setForeground(Color.red);
-					// ((JLabel)c).setText(((JLabel)c).getText().toString());
-					c = new JLabel(((JLabel)c).getText().toString());
+			for(int j=0;j<n;j++){
+				if(testGraph.get(j)==i){
+					super.g.setColor(Color.RED);
+					super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*j);
+					System.out.println("success at "+j);
+					System.out.printf("%d %d %d - %d %d %d",i.u,i.v,i.len,testGraph.get(j).u,testGraph.get(j).v,testGraph.get(j).len);
 					break;
 				}
 			}
@@ -100,7 +106,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			}
 		}
 		super.g.setColor(Color.GREEN);
-		edge front = testGraph.get(edgeID-1);
+		edge front = getGraph.get(edgeID-1);
 		drawEdge(front.u,front.v,front.len);
 		super.g.setColor(Color.BLACK);
 		errLabel.setForeground(Color.green);
@@ -117,6 +123,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			else{
 				errLabel.setText("");
 				n = Integer.parseInt(vertexNumberText.getText());
+				nowHeight = 300;
 				myDS = new disjointSet(n);
 				adjacencyMartix = new int[n+1][n+1];
 				for(int i=0;i<=n;i++){
@@ -130,7 +137,6 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				for(int i=1;i<=n;i++){
 					fromPointTest.addItem(i);
 				}
-				edgeDisplayPanel.removeAll();
 				fromPointTest.setEnabled(true);
 				toPointTest.setEnabled(false);
 				weightPointTest.setEnabled(true);
@@ -180,12 +186,11 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 					errLabel.setText("此邊已設值");
 				}
 				else{
-					String str = a+" - "+b+" length = "+c;
-					// super.edgeDisplayPanel.add(new JLabel(str));
 					adjacencyMartix[a][b]=adjacencyMartix[b][a]=c;
 					System.out.printf("%d %d %d\n",a,b,c);
+					super.g.setColor(Color.BLACK);
+					super.g.drawString(a+" - "+b+" length = "+c,870,300+20*testGraph.size());
 					testGraph.add(new edge(a,b,c));
-					super.g.setColor(Color.BLUE);
 					drawEdge(a,b,c);
 					fromPointTest.setSelectedIndex(0);
 					toPointTest.setSelectedIndex(0);

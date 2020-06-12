@@ -19,5 +19,4 @@ public class minimumSpanningTree extends graph{
         });
         return new ArrayList<edge>(super.G);
     }
-
 }
