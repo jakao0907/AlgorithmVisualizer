@@ -9,8 +9,8 @@ import java.awt.event.*;
 public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 
 	protected final static int gwidth = 450;
-	protected final static int gheight = 450;
-	private final int guiWidth=600,guiHeight=600;
+	protected final static int gheight = 600;
+	private final int guiWidth=600,guiHeight=800;
 	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel;
 	protected JButton buildButton,startButton,addEdgeButton;
 	protected JTextField vertexNumberText,weightPointTest;
@@ -21,7 +21,7 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	private minimumSpanningTree myGraph;
 	protected static int gx,gy;
 	Dimension ScreenSize,FrameSize;
-
+	
 	public minimumSpanningTreeGUI(){
 
 		vertexNumberLabel = new JLabel("輸入點的數量");
@@ -89,7 +89,7 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		setLocation((ScreenSize.width-FrameSize.width)/2,(ScreenSize.height-FrameSize.height)/2);
 
 		gx=(FrameSize.width-gwidth)/2;
-		gy=(FrameSize.height-gheight)/2+25;
+		gy=(FrameSize.height-gheight)/2+100;
 		g = getGraphics();
 		g.setClip(gx,gy, gwidth, gheight);
 		g.setColor(Color.BLACK);
