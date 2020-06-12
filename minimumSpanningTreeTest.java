@@ -12,13 +12,12 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	private static JLabel testNumLabel;
 	private static JPanel vertexNumberPanel;
 	private static boolean flag=false;
-	protected static ArrayList<edge> testGraph = new ArrayList<edge>();
+	private static ArrayList<edge> testGraph = new ArrayList<edge>();
 	private int[][] adjacencyMartix;
 	private int[] X,Y;
 	private disjointSet myDS;
+
 	public static void main(String[] args){
-		// testGraph.add(new edge(1,2,10));
-		// testGraph.add(new edge(2,3,4));
 		new minimumSpanningTreeTest();		
 	}
 
@@ -47,16 +46,26 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		myDS.union(a,b);
 		m++;
 		int diffX,diffY;
-		diffX = (int) Math.round((Math.cos(angle)*15));
-		diffY = (int) -Math.round((Math.sin(angle)*15));
-		if(X[a-1]>X[b-1])	diffX = -diffX;
-		// if(Y[a-1]<Y[b-1])	diffY = -diffY;
-		System.out.println();
-		System.out.println("angle = " + angle);
-		System.out.println("sin = "+Math.sin(angle)+" cos = "+Math.cos(angle));
-		System.out.println(diffX+" "+diffY);
-		System.out.println();
-		super.g.drawLine(X[a-1]+super.gx+15+diffX,Y[a-1]+super.gy+15+diffY,X[b-1]+super.gx+15-diffX,Y[b-1]+super.gy+15-diffY);
+		diffX = Math.abs((int) Math.round((Math.cos(angle)*15)));
+		diffY = Math.abs((int) -Math.round((Math.sin(angle)*15)));
+		if(X[a-1]>X[b-1]){
+			if(Y[a-1]>Y[b-1]){
+				super.g.drawLine(X[a-1]+super.gx+15-diffX,Y[a-1]+super.gy+15-diffY,X[b-1]+super.gx+15+diffX,Y[b-1]+super.gy+15+diffY);
+			}
+			else{
+				super.g.drawLine(X[a-1]+super.gx+15-diffX,Y[a-1]+super.gy+15+diffY,X[b-1]+super.gx+15+diffX,Y[b-1]+super.gy+15-diffY);
+			}
+		}
+		else{
+			if(Y[a-1]>Y[b-1]){
+				super.g.drawLine(X[a-1]+super.gx+15+diffX,Y[a-1]+super.gy+15-diffY,X[b-1]+super.gx+15-diffX,Y[b-1]+super.gy+15+diffY);
+			}
+			else{
+				super.g.drawLine(X[a-1]+super.gx+15+diffX,Y[a-1]+super.gy+15+diffY,X[b-1]+super.gx+15-diffX,Y[b-1]+super.gy+15-diffY);
+			}
+		}
+		super.g.setColor(Color.BLACK);
+		
 	}
 	
 	public void play(){
@@ -72,10 +81,23 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			super.g.setColor(Color.RED);
 			drawEdge(i.u,i.v,i.len);
 			System.out.println(i.u+" "+i.v+" "+i.len);
+			for(Component c:super.edgeDisplayPanel.getComponents()){
+				String str1 = i.u+" - "+i.v+" length = "+i.len;
+				String str2 = i.v+" - "+i.u+" length = "+i.len;
+				if(((JLabel)c).getText().toString().equals(str1)||((JLabel)c).getText().toString().equals(str2)){
+					c.setForeground(Color.red);
+					// ((JLabel)c).setText(((JLabel)c).getText().toString());
+					c = new JLabel(((JLabel)c).getText().toString());
+					break;
+				}
+			}
 			edgeID++;
 			try{
-				Thread.sleep(5000);
-			}catch(InterruptedException ie){}
+				Thread.sleep(2000);
+			}
+			catch(InterruptedException ie){
+				System.err.println("sleep err");
+			}
 		}
 		super.g.setColor(Color.GREEN);
 		edge front = testGraph.get(edgeID-1);
@@ -83,13 +105,13 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		super.g.setColor(Color.BLACK);
 		errLabel.setForeground(Color.green);
 		errLabel.setText("finish!");
-		// errLabel.setForeground(Color.red);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==buildButton){
 			if(vertexNumberText.getText().equals("")){
+				errLabel.setForeground(Color.red);
 				errLabel.setText("無輸入!!!");
 			}
 			else{
@@ -108,6 +130,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				for(int i=1;i<=n;i++){
 					fromPointTest.addItem(i);
 				}
+				edgeDisplayPanel.removeAll();
 				fromPointTest.setEnabled(true);
 				toPointTest.setEnabled(false);
 				weightPointTest.setEnabled(true);
@@ -126,20 +149,25 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				play();
 			}
 			else{
+				errLabel.setForeground(Color.red);
 				errLabel.setText("需先將整張圖連通!");
 			}
 		}
 		else if(e.getSource()==addEdgeButton){
 			if(weightPointTest.getText().equals("")){
+				errLabel.setForeground(Color.red);
 				errLabel.setText("請輸入權重!");
 			}
 			else if(fromPointTest.getSelectedItem().equals("請選擇")){
+				errLabel.setForeground(Color.red);
 				errLabel.setText("請選擇端點1");
 			}
 			else if(toPointTest.getSelectedItem().equals("請選擇")){
+				errLabel.setForeground(Color.red);
 				errLabel.setText("請選擇端點2");
 			}
 			else if(Integer.parseInt(weightPointTest.getText())<=0){
+				errLabel.setForeground(Color.red);
 				errLabel.setText("邊權重需為正整數!");
 			}
 			else{
@@ -148,12 +176,16 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				int b = Integer.parseInt(toPointTest.getSelectedItem().toString());
 				int c = Integer.parseInt(weightPointTest.getText());
 				if(adjacencyMartix[a][b]>0){
+					errLabel.setForeground(Color.red);
 					errLabel.setText("此邊已設值");
 				}
 				else{
+					String str = a+" - "+b+" length = "+c;
+					// super.edgeDisplayPanel.add(new JLabel(str));
 					adjacencyMartix[a][b]=adjacencyMartix[b][a]=c;
 					System.out.printf("%d %d %d\n",a,b,c);
 					testGraph.add(new edge(a,b,c));
+					super.g.setColor(Color.BLUE);
 					drawEdge(a,b,c);
 					fromPointTest.setSelectedIndex(0);
 					toPointTest.setSelectedIndex(0);

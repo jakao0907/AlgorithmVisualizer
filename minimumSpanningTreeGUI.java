@@ -10,11 +10,11 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 
 	protected final static int gwidth = 450;
 	protected final static int gheight = 600;
-	private final int guiWidth=600,guiHeight=800;
-	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel;
+	private final int guiWidth=1000,guiHeight=800;
+	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel,testLabel1,testLabel2;
 	protected JButton buildButton,startButton,addEdgeButton;
 	protected JTextField vertexNumberText,weightPointTest;
-	protected JPanel functionPanel,errPanel,addEdgePanel;
+	protected JPanel functionPanel,errPanel,addEdgePanel,edgeDisplayPanel;
 	protected JComboBox fromPointTest,toPointTest;
 	private ArrayList<edge> edgeArray;
 	protected static Graphics g;
@@ -24,6 +24,16 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	
 	public minimumSpanningTreeGUI(){
 
+		edgeDisplayPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		// testLabel1 = new JLabel("10 - 20  length = 34445");
+		// testLabel2 = new JLabel("4 - 5  length = 6");
+		// edgeDisplayPanel.add(testLabel1);
+		// edgeDisplayPanel.add(testLabel2);
+		// edgeDisplayPanel.setSize(180,400);
+		// edgeDisplayPanel.setLocation(750,10);
+		// add(edgeDisplayPanel);
+
 		vertexNumberLabel = new JLabel("輸入點的數量");
 		vertexNumberText = new JTextField(10);
 
@@ -31,7 +41,7 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		startButton = new JButton("開始動畫");
 		startButton.setEnabled(false);
 
-		errLabel = new JLabel(" ");
+		errLabel = new JLabel("");
 		errLabel.setForeground(Color.red);
 		//first line input vertex number and start teacher function
 		functionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -40,10 +50,13 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		functionPanel.add(vertexNumberText);
 		functionPanel.add(buildButton);
 		functionPanel.add(startButton);
+		functionPanel.add(errLabel);
+		functionPanel.setSize(600,50);
+		functionPanel.setLocation(10,10);
 		add(functionPanel);
 
 		//secode line addedge function
-		fromPointLabel = new JLabel("加邊-> 端點1:");
+		fromPointLabel = new JLabel("加邊： 端點1:");
 		fromPointTest = new JComboBox();
 		fromPointTest.setEnabled(false);
 
@@ -58,7 +71,7 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		addEdgeButton = new JButton("新增");
 		addEdgeButton.setEnabled(false);
 
-		addEdgePanel = new JPanel(new FlowLayout());
+		addEdgePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		addEdgePanel.add(fromPointLabel);
 		addEdgePanel.add(fromPointTest);
@@ -67,11 +80,9 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		addEdgePanel.add(weightPointLabel);
 		addEdgePanel.add(weightPointTest);
 		addEdgePanel.add(addEdgeButton);
+		addEdgePanel.setSize(500,50);
+		addEdgePanel.setLocation(10,60);
 		add(addEdgePanel);
-
-		errPanel = new JPanel();
-		errPanel.add(errLabel);
-		add(errPanel,BorderLayout.SOUTH);
 
 		fromPointTest.addActionListener(this);
 		buildButton.addActionListener(this);
@@ -81,7 +92,8 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 		setSize(guiWidth,guiHeight);	//寬-長
 		setTitle("minimum Spanning Tree");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new FlowLayout());
+		// setLayout(new FlowLayout());
+		setLayout(null);
 		setVisible(true);
 
 		ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
