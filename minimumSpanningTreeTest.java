@@ -16,7 +16,6 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	private int[][] adjacencyMartix;
 	private int[] X,Y;
 	private disjointSet myDS;
-	private static int nowHeight=300;
 
 	public static void main(String[] args){
 		new minimumSpanningTreeTest();	
@@ -43,14 +42,10 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		System.out.println(n);
 	}
 
-	public void drawEdge(int a,int b,int c){
+	public void drawEdge(int a,int b){
 		double d = (double)(Y[b-1]-Y[a-1])/(X[b-1]-X[a-1]);
 		double angle = -Math.atan(d)/(Math.PI/180.0);
-		myDS.union(a,b);
-		m++;
 		int diffX,diffY;
-		// super.g.drawString(a+" - "+b+" length = "+c,870,nowHeight);
-		nowHeight+=20;
 		diffX = Math.abs((int) Math.round((Math.cos(angle)*15)));
 		diffY = Math.abs((int) -Math.round((Math.sin(angle)*15)));
 		if(X[a-1]>X[b-1]){
@@ -74,56 +69,88 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	}
 	
 	public void play(){
+		super.errLabel.setText("");
 		minimumSpanningTree game = new minimumSpanningTree(n,m,testGraph);
-		// super.g.drawString("1 - 2 length = 3",870,340);
-		// super.g.drawString("1 - 2 length = 3",870,300);
-		// super.g.drawString("1 - 2 length = 3",870,320);
 		ArrayList<edge> getGraph = game.solve();
-		int edgeID = 0;
-		for(edge i:testGraph){
-			if(edgeID > 0){
-				super.g.setColor(Color.GREEN);
-				edge front = getGraph.get(edgeID-1);
-				drawEdge(front.u,front.v,front.len);
+		disjointSet playDS =  new disjointSet(n);
+		int edgeID = 0,tempJ = 0;
+		for(edge i:getGraph){
+			super.g.setColor(Color.RED);
+			super.g.drawString("for i in sorted edge array",50,300);
+			drawEdge(i.u,i.v);
+			try{
+				Thread.sleep(1000);
 			}
-			drawEdge(i.u,i.v,i.len);
+			catch(InterruptedException ie){
+				System.err.println("sleep err");
+			}
+			super.g.setColor(Color.BLACK);
+			super.g.drawString("for i in sorted edge array",50,300);
+			super.g.setColor(Color.RED);
+			super.g.drawString("    if vertex u not connected with vertex v",50,320);
+			try{
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+				System.err.println("sleep err");
+			}
+			super.g.setColor(Color.BLACK);
+			super.g.drawString("    if vertex u not connected with vertex v",50,320);
 			System.out.println(i.u+" "+i.v+" "+i.len);
 			for(int j=0;j<n;j++){
 				if(testGraph.get(j)==i){
 					super.g.setColor(Color.RED);
 					super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*j);
+					tempJ = j;
 					System.out.println("success at "+j);
-					System.out.printf("%d %d %d - %d %d %d",i.u,i.v,i.len,testGraph.get(j).u,testGraph.get(j).v,testGraph.get(j).len);
 					break;
 				}
 			}
 			edgeID++;
-			try{
-				Thread.sleep(2000);
+				super.g.setColor(Color.RED);
+				super.g.drawString("    else continue",50,360);
+				try{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException ie){
+					System.err.println("sleep err");
+				}
+				super.g.setColor(Color.BLACK);
+				super.g.drawString("    else continue",50,360);
+				super.g.setColor(new Color(238,238,238));
+				drawEdge(i.u,i.v);
 			}
-			catch(InterruptedException ie){
-				System.err.println("sleep err");
+			else{
+				super.g.setColor(Color.RED);
+				super.g.drawString("        add edge between vertex u and vertex v",50,340);
+				try{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException ie){
+					System.err.println("sleep err");
+				}
+				super.g.setColor(Color.BLACK);
+				super.g.drawString("        add edge between vertex u and vertex v",50,340);
+				drawEdge(i.u,i.v);
+				playDS.union(i.u,i.v);
 			}
+			super.g.setColor(Color.BLACK);
+			super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*tempJ);
 		}
-		super.g.setColor(Color.GREEN);
-		edge front = getGraph.get(edgeID-1);
-		drawEdge(front.u,front.v,front.len);
-		super.g.setColor(Color.BLACK);
-		errLabel.setForeground(Color.green);
-		errLabel.setText("finish!");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==buildButton){
 			if(vertexNumberText.getText().equals("")){
-				errLabel.setForeground(Color.red);
-				errLabel.setText("無輸入!!!");
+				super.errLabel.setForeground(Color.red);
+				super.errLabel.setText("無輸入!!!");
 			}
 			else{
-				errLabel.setText("");
+				super.errLabel.setText("");
+				testGraph = new ArrayList<edge>();
 				n = Integer.parseInt(vertexNumberText.getText());
-				nowHeight = 300;
+				m = 0;
 				myDS = new disjointSet(n);
 				adjacencyMartix = new int[n+1][n+1];
 				for(int i=0;i<=n;i++){
@@ -145,7 +172,14 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			}
 		}
 		else if(e.getSource()==startButton){
+			paintPoint();
+			super.g.setColor(Color.BLACK);
+			super.g.drawString("for i in sorted edge array",50,300);
+			super.g.drawString("    if vertex u not connected with vertex v",50,320);
+			super.g.drawString("        add edge between vertex u and vertex v",50,340);
+			super.g.drawString("    else continue",50,360);
 			boolean flag=true;
+			errLabel.setText("");
 			for(int i=2;i<=n;i++){
 				if(myDS.find(i-1)!=myDS.find(i)){
 					flag=false;
@@ -186,12 +220,13 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 					errLabel.setText("此邊已設值");
 				}
 				else{
+					myDS.union(a,b);
+					m++;
 					adjacencyMartix[a][b]=adjacencyMartix[b][a]=c;
 					System.out.printf("%d %d %d\n",a,b,c);
 					super.g.setColor(Color.BLACK);
 					super.g.drawString(a+" - "+b+" length = "+c,870,300+20*testGraph.size());
 					testGraph.add(new edge(a,b,c));
-					drawEdge(a,b,c);
 					fromPointTest.setSelectedIndex(0);
 					toPointTest.setSelectedIndex(0);
 					weightPointTest.setText("");
