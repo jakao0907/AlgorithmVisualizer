@@ -43,6 +43,11 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 	}
 
 	public void drawEdge(int a,int b){
+		if(a>b){
+			int temp = a;
+			a = b;
+			b = temp;
+		}
 		double d = (double)(Y[b-1]-Y[a-1])/(X[b-1]-X[a-1]);
 		double angle = -Math.atan(d)/(Math.PI/180.0);
 		int diffX,diffY;
@@ -65,7 +70,6 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			}
 		}
 		super.g.setColor(Color.BLACK);
-		
 	}
 	
 	public void play(){
@@ -135,8 +139,9 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				drawEdge(i.u,i.v);
 				playDS.union(i.u,i.v);
 			}
-			super.g.setColor(Color.BLACK);
-			super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*tempJ);
+			
+			// super.g.setColor(Color.BLACK);
+			// super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*tempJ);
 		}
 	}
 
@@ -173,12 +178,6 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 			}
 		}
 		else if(e.getSource()==startButton){
-			paintPoint();
-			super.g.setColor(Color.BLACK);
-			super.g.drawString("for i in sorted edge array",50,300);
-			super.g.drawString("    if vertex u not connected with vertex v",50,320);
-			super.g.drawString("        add edge between vertex u and vertex v",50,340);
-			super.g.drawString("    else continue",50,360);
 			boolean flag=true;
 			errLabel.setText("");
 			for(int i=2;i<=n;i++){
@@ -187,6 +186,17 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				}
 			}
 			if(flag){
+				super.g.setColor(Color.BLACK);
+				super.g.drawString("for i in sorted edge array",50,300);
+				super.g.drawString("    if vertex u not connected with vertex v",50,320);
+				super.g.drawString("        add edge between vertex u and vertex v",50,340);
+				super.g.drawString("    else continue",50,360);
+				paintPoint();
+				int cnt=0;
+				for(edge i:testGraph){
+					super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*cnt);
+					cnt++;
+				}
 				play();
 			}
 			else{

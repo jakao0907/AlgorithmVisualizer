@@ -23,6 +23,7 @@ public class Login extends JFrame
 
         Container ct;
         BackgroundPanel bgp;
+        ct = this.getContentPane();
       
         bgp=new BackgroundPanel((new ImageIcon("1.jpg")).getImage());
         bgp.setLayout(null);
@@ -51,6 +52,7 @@ public class Login extends JFrame
         button1.setVisible(true);
         button2.setVisible(true);
         button4.setVisible(true);
+        ct.add(bgp);
 
         ButtonHandler handler = new ButtonHandler();
         button1.addActionListener(handler);
