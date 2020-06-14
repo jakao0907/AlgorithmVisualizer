@@ -33,7 +33,7 @@ public class shortestPathTest extends shortestPathGUI{
             Y[s] = (int) (Math.round((super.gheight/2-1) * Math.sin(a)*Math.pow(10,0))/Math.pow(10,0)*0.8+(super.gheight/2));
             super.g.drawOval(X[s]+super.gx,Y[s]+super.gy,30,30);
             super.g.drawString(Integer.toString(s+1),X[s]+super.gx+12,Y[s]+super.gy+19);
-            System.out.println((X[s]+super.gx)+ " "+(Y[s]+super.gy ));
+            // System.out.println((X[s]+super.gx)+ " "+(Y[s]+super.gy ));
             s++;
 		}
 	}
@@ -43,6 +43,11 @@ public class shortestPathTest extends shortestPathGUI{
 	}
 
 	public void drawEdge(int a,int b){
+		if(a>b){
+			int temp = a;
+			a = b;
+			b = temp;
+		}
 		double d = (double)(Y[b-1]-Y[a-1])/(X[b-1]-X[a-1]);
 		double angle = -Math.atan(d)/(Math.PI/180.0);
 		int diffX,diffY;
@@ -69,8 +74,100 @@ public class shortestPathTest extends shortestPathGUI{
 	}
 	
 	public void play(){
-
-
+		super.g.setColor(Color.RED);
+		super.g.drawString("initialize-single-source",50,300);
+		int[] dis = new int[n+1];
+		for(int i=1;i<=n;i++)	dis[i]=(int)1e9;
+		PriorityQueue<pair> pq = new PriorityQueue<pair>(n*n,new pairComparator());
+		int s = Integer.parseInt(startVertexComboBox.getSelectedItem().toString());
+		dis[s] = 0;
+		pq.add(new pair(dis[s],s));
+		super.g.setColor(Color.BLACK);
+		int cnt=0;
+		for(edge i:testGraph){
+			super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*cnt);
+			cnt++;
+		}
+		super.g.drawString("distance from start vertex to each vertex",50,600);
+		for(int i=1;i<=n;i++){
+			if(dis[i]==(int)(1e9))
+				super.g.drawString(i+"= inf",50,600+20*i);
+			else
+				super.g.drawString(i+"= "+dis[i],50,600+20*i);
+		}
+		try{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException ie){
+			System.err.println("sleep err");
+		}
+		super.g.drawString("initialize-single-source",50,300);
+		while(pq.size()>0){
+			super.g.setColor(Color.RED);
+			super.g.drawString("while PQ(PriorityQueue) not empty",50,320);
+			try{
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+				System.err.println("sleep err");
+			}
+			super.g.setColor(Color.BLACK);
+			super.g.drawString("while PQ(PriorityQueue) not empty",50,320);
+			super.g.setColor(Color.RED);
+			super.g.drawString("    do u <- extract-min(PQ)",50,340);
+			try{
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException ie){
+				System.err.println("sleep err");
+			}
+			super.g.setColor(Color.BLACK);
+			super.g.drawString("    do u <- extract-min(PQ)",50,340);
+			pair node = pq.poll();
+			for(int i=1;i<=n;i++){
+				super.g.setColor(Color.RED);
+				super.g.drawString("    for each neighbor i of u",50,360);
+				drawEdge(node.second,i);
+				try{
+					Thread.sleep(1000);
+				}
+				catch(InterruptedException ie){
+					System.err.println("sleep err");
+				}
+				super.g.setColor(Color.BLACK);
+				super.g.drawString("    for each neighbor i of u",50,360);
+				if(adjacencyMartix[node.second][i]>0&&dis[i]>dis[node.second]+adjacencyMartix[node.second][i]){
+					super.g.setColor(Color.RED);
+					super.g.drawString("        do relex(u,i,weight)",50,380);
+					super.g.setColor(new Color(238,238,238));
+					if(dis[i]==(int)(1e9))
+						super.g.drawString(i+"= inf",50,600+20*i);
+					else
+						super.g.drawString(i+"= "+dis[i],50,550+20*i);
+					dis[i] = dis[node.second]+adjacencyMartix[node.second][i];
+					pq.add(new pair(dis[i],i));
+					System.out.println("update vertex "+i+" distance to "+dis[i]);
+					try{
+						Thread.sleep(1000);
+					}
+					catch(InterruptedException ie){
+						System.err.println("sleep err");
+					}
+					super.g.setColor(Color.BLACK);
+					super.g.drawString("        do relex(u,i,weight)",50,380);
+					super.g.drawString(i+"= "+dis[i],50,600+20*i);
+					drawEdge(node.second,i);
+				}
+				if(adjacencyMartix[node.second][i]>0){
+					super.g.setColor(Color.BLACK);
+					drawEdge(node.second,i);	
+				}
+				// else{
+				// 	super.g.setColor(new Color(238,238,238));
+				// 	drawEdge(node.second,i);
+				// }
+			}
+		}
 	}
 
 	@Override
@@ -117,10 +214,9 @@ public class shortestPathTest extends shortestPathGUI{
 			else{
 				paintPoint();
 				super.g.setColor(Color.BLACK);
-				super.g.drawString("for i in sorted edge array",50,300);
-				super.g.drawString("    if vertex u not connected with vertex v",50,320);
-				super.g.drawString("        add edge between vertex u and vertex v",50,340);
-				super.g.drawString("    else continue",50,360);
+				for(edge i:testGraph){
+					drawEdge(i.u,i.v);
+				}
 				boolean flag=true;
 				errLabel.setText("");
 				for(int i=2;i<=n;i++){
@@ -129,6 +225,12 @@ public class shortestPathTest extends shortestPathGUI{
 					}
 				}
 				if(flag){
+					super.g.setColor(Color.BLACK);
+					super.g.drawString("initialize-single-source",50,300);
+					super.g.drawString("while PQ(PriorityQueue) not empty",50,320);
+					super.g.drawString("    do u <- extract-min(PQ)",50,340);
+					super.g.drawString("    for each neighbor i of u",50,360);
+					super.g.drawString("        do relex(u,i,weight)",50,380);
 					play();
 				}
 				else{
@@ -170,6 +272,7 @@ public class shortestPathTest extends shortestPathGUI{
 					System.out.printf("%d %d %d\n",a,b,c);
 					super.g.setColor(Color.BLACK);
 					super.g.drawString(a+" - "+b+" length = "+c,870,300+20*testGraph.size());
+					drawEdge(a,b);
 					testGraph.add(new edge(a,b,c));
 					fromPointTest.setSelectedIndex(0);
 					toPointTest.setSelectedIndex(0);
