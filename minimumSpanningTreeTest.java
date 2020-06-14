@@ -77,8 +77,9 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 		minimumSpanningTree game = new minimumSpanningTree(n,m,testGraph);
 		ArrayList<edge> getGraph = game.solve();
 		disjointSet playDS =  new disjointSet(n);
-		int edgeID = 0,tempJ = 0;
+		int edgeID = 0,tempJ = -1;
 		for(edge i:getGraph){
+			tempJ = -1;
 			super.g.setColor(Color.RED);
 			super.g.drawString("for i in sorted edge array",50,300);
 			drawEdge(i.u,i.v);
@@ -106,7 +107,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 					super.g.setColor(Color.RED);
 					super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*j);
 					tempJ = j;
-					System.out.println("success at "+j);
+					System.out.println("draw "+i.u+" "+i.v+" "+i.len+" "+j+" to red");
 					break;
 				}
 			}
@@ -139,9 +140,12 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				drawEdge(i.u,i.v);
 				playDS.union(i.u,i.v);
 			}
+			if(tempJ!=-1){
+				super.g.setColor(Color.BLACK);
+				super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*tempJ);
+				System.out.println("draw "+i.u+" "+i.v+" "+i.len+" "+tempJ+" to black");
+			}
 			
-			// super.g.setColor(Color.BLACK);
-			// super.g.drawString(i.u+" - "+i.v+" length = "+i.len,870,300+20*tempJ);
 		}
 	}
 
