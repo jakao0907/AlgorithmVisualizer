@@ -107,6 +107,7 @@ public class minimumSpanningTreeTest extends minimumSpanningTreeGUI{
 				}
 			}
 			edgeID++;
+			if(playDS.find(i.u)==playDS.find(i.v)){
 				super.g.setColor(Color.RED);
 				super.g.drawString("    else continue",50,360);
 				try{

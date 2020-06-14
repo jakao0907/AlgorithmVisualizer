@@ -2,9 +2,9 @@ package ntou.cs.java2020.project;
 
 import java.util.*;
 
-public class ShortestPath extends graph{
+public class shortestPath extends graph{
 
-	public ShortestPath(int _n,int _m,ArrayList<edge> _G){
+	public shortestPath(int _n,int _m,ArrayList<edge> _G){
 		super(_n,_m,_G);
 		
 		for(int i=1;i<=n;i++){
