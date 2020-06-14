@@ -24,12 +24,12 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	
 	public minimumSpanningTreeGUI(){
 
-		exitButton = new JButton("返回主頁面");
-		exitPanel = new JPanel();
-		exitPanel.add(exitButton);
-		exitPanel.setSize(100,50);
-		exitPanel.setLocation(860,10);
-		add(exitPanel);
+		// exitButton = new JButton("返回主頁面");
+		// exitPanel = new JPanel();
+		// exitPanel.add(exitButton);
+		// exitPanel.setSize(100,50);
+		// exitPanel.setLocation(860,10);
+		// add(exitPanel);
 
 		vertexNumberLabel = new JLabel("輸入點的數量");
 		vertexNumberText = new JTextField(10);
@@ -88,7 +88,7 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 
 		setSize(guiWidth,guiHeight);	//寬-長
 		setTitle("minimum Spanning Tree");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setVisible(true);
 

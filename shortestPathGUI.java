@@ -86,7 +86,7 @@ public class shortestPathGUI extends JFrame implements ActionListener{
 
 		setSize(guiWidth,guiHeight);	//寬-長
 		setTitle("shortest Path");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setVisible(true);
 
