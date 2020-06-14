@@ -12,9 +12,9 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	protected final static int gheight = 600;
 	private final int guiWidth=1000,guiHeight=800;
 	protected JLabel vertexNumberLabel,errLabel,fromPointLabel,toPointLabel,weightPointLabel;
-	protected JButton buildButton,startButton,addEdgeButton;
+	protected JButton buildButton,startButton,addEdgeButton,exitButton;
 	protected JTextField vertexNumberText,weightPointTest;
-	protected JPanel functionPanel,errPanel,addEdgePanel;
+	protected JPanel functionPanel,errPanel,addEdgePanel,exitPanel;
 	protected JComboBox fromPointTest,toPointTest;
 	private ArrayList<edge> edgeArray;
 	protected static Graphics g;
@@ -24,6 +24,12 @@ public class minimumSpanningTreeGUI extends JFrame implements ActionListener{
 	
 	public minimumSpanningTreeGUI(){
 
+		exitButton = new JButton("返回主頁面");
+		exitPanel = new JPanel();
+		exitPanel.add(exitButton);
+		exitPanel.setSize(100,50);
+		exitPanel.setLocation(860,10);
+		add(exitPanel);
 
 		vertexNumberLabel = new JLabel("輸入點的數量");
 		vertexNumberText = new JTextField(10);
