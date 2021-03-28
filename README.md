@@ -1,4 +1,4 @@
-## java期末專案
+## java final project
 
 ### minimumSpanningTree(Kruskal's Algorithm)
 
