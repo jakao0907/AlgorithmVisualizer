@@ -1,7 +1,7 @@
-## java final project
+## algorithm visualizer (java final project)
 
-### minimumSpanningTree(Kruskal's Algorithm)
+- minimumSpanningTree(Kruskal's Algorithm)
 
-### shortestPath(Dijkstra's Algorithm)
+- shortestPath(Dijkstra's Algorithm)
 
-### convexHull(Andrew's Monotone Chain)
+- convexHull(Andrew's Monotone Chain)
